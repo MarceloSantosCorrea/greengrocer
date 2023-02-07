@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greengrocer/src/config/app_data.dart' as app_data;
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/services/utils_service.dart';
 
@@ -14,8 +15,11 @@ class CartTab extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const Expanded(
-            child: Placeholder(),
+          Expanded(
+            child: ListView.builder(
+              itemCount: app_data.cartItems.length,
+              itemBuilder: (_, index) {},
+            ),
           ),
           Container(
             padding: const EdgeInsets.all(16.0),
