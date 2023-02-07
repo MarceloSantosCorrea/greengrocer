@@ -37,7 +37,7 @@ class SignInScreen extends StatelessWidget {
                               ),
                             ),
                             TextSpan(
-                              text: 'groccer',
+                              text: 'grocer',
                               style: TextStyle(
                                 color: CustomColors.customContrastColor,
                                 fontWeight: FontWeight.bold,
