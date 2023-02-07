@@ -1,10 +1,10 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:greengrocer/src/screens/home/components/item_tile.dart';
 
 import '../../config/app_data.dart' as app_data;
 import '../../config/custom_colors.dart';
 import '../home/components/category_tile.dart';
+import 'components/item_tile.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);

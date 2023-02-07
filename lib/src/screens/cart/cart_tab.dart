@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/app_data.dart' as app_data;
-import 'package:greengrocer/src/config/custom_colors.dart';
-import 'package:greengrocer/src/models/cart_item_model.dart';
-import 'package:greengrocer/src/screens/cart/components/cart_tile.dart';
-import 'package:greengrocer/src/services/utils_service.dart';
+
+import '../../config/custom_colors.dart';
+import '../../models/cart_item_model.dart';
+import '../../services/utils_service.dart';
+import 'components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -88,7 +89,9 @@ class _CartTabState extends State<CartTab> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )),
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool? result = await showOrderConfirmation();
+                    },
                     child: const Text(
                       'Concluir pedido',
                       style: TextStyle(
@@ -99,9 +102,44 @@ class _CartTabState extends State<CartTab> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
+    );
+  }
+
+  Future<bool?> showOrderConfirmation() {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text('Confirmação'),
+          content: const Text('Deseja realmente concluir o pedido?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Não'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+              child: const Text('sim'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

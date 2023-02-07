@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:greengrocer/src/config/custom_colors.dart';
 
-import 'package:greengrocer/src/models/item_model.dart';
-import 'package:greengrocer/src/screens/widgets/quantity_widget.dart';
-import 'package:greengrocer/src/services/utils_service.dart';
+import '../../config/custom_colors.dart';
+import '../../models/item_model.dart';
+import '../../services/utils_service.dart';
+import '../widgets/quantity_widget.dart';
 
 class ProductScreen extends StatefulWidget {
   final ItemModel item;

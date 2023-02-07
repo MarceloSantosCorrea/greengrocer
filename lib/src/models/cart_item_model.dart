@@ -1,4 +1,4 @@
-import 'package:greengrocer/src/models/item_model.dart';
+import 'item_model.dart';
 
 class CartItemModel {
   ItemModel item;
