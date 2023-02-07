@@ -90,19 +90,18 @@ class SignInScreen extends StatelessWidget {
                       isSecret: true,
                     ),
                     SizedBox(
-                      height: 58.0,
+                      height: 50.0,
                       child: ElevatedButton(
                         onPressed: () {},
-                        // ignore: sort_child_properties_last
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
                         child: const Text(
                           'Entrar',
                           style: TextStyle(
                             fontSize: 18.0,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
                           ),
                         ),
                       ),
