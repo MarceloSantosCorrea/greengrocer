@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greengrocer/src/auth/sign_in_screen.dart';
+import 'src/screens/auth/sign_in_screen.dart';
 
 void main() {
   runApp(const MyApp());
