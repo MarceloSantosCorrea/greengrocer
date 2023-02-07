@@ -1,6 +1,5 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:greengrocer/src/models/item_model.dart';
 import 'package:greengrocer/src/screens/home/components/item_tile.dart';
 
 import '../../config/app_data.dart' as app_data;
