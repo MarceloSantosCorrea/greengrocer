@@ -9,7 +9,7 @@ class OrdersTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pedidos ${app_data.orders.length}'),
+        title: const Text('Pedidos'),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(16.0),

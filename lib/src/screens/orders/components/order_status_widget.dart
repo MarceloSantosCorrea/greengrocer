@@ -42,6 +42,26 @@ class OrderStatusWidget extends StatelessWidget {
             isActive: true,
             backgroundColor: Colors.red,
           ),
+        ] else ...[
+          _StatusDot(
+            title: 'Pagamento',
+            isActive: currentStatus >= 2,
+          ),
+          _CustomDivider(),
+          _StatusDot(
+            title: 'Preparando',
+            isActive: currentStatus >= 3,
+          ),
+          _CustomDivider(),
+          _StatusDot(
+            title: 'Envio',
+            isActive: currentStatus >= 4,
+          ),
+          _CustomDivider(),
+          _StatusDot(
+            title: 'Entregue',
+            isActive: currentStatus >= 5,
+          ),
         ]
       ],
     );
