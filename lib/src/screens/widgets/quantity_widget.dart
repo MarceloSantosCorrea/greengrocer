@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../config/custom_colors.dart';
 
 class QuantityWidget extends StatelessWidget {
