@@ -6,7 +6,18 @@ class OrderStatusWidget extends StatelessWidget {
   final String status;
   final bool isOverdue;
 
-  const OrderStatusWidget({
+  final Map<String, int> allStatus = {
+    'pending_payment': 0,
+    'refunded': 1,
+    'paid': 2,
+    'preparing_purchase': 3,
+    'shipping': 4,
+    'delivered': 5,
+  };
+
+  int get currentStatus => allStatus[status]!;
+
+  OrderStatusWidget({
     Key? key,
     required this.status,
     required this.isOverdue,
@@ -15,9 +26,23 @@ class OrderStatusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
-        _StatusDot(title: 'Pedido confirmado', isActive: true),
-        _StatusDot(title: '', isActive: false),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _StatusDot(title: 'Pedido confirmado', isActive: true),
+        _CustomDivider(),
+        if (currentStatus == 1) ...[
+          const _StatusDot(
+            title: 'Pix estornado',
+            isActive: true,
+            backgroundColor: Colors.orange,
+          ),
+        ] else if (isOverdue) ...[
+          const _StatusDot(
+            title: 'Pagamento Pix vencido',
+            isActive: true,
+            backgroundColor: Colors.red,
+          ),
+        ]
       ],
     );
   }
@@ -26,11 +51,13 @@ class OrderStatusWidget extends StatelessWidget {
 class _StatusDot extends StatelessWidget {
   final bool isActive;
   final String title;
+  final Color? backgroundColor;
 
   const _StatusDot({
     Key? key,
     required this.isActive,
     required this.title,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -44,8 +71,9 @@ class _StatusDot extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: CustomColors.customSwatchColor),
-            color:
-                isActive ? CustomColors.customSwatchColor : Colors.transparent,
+            color: isActive
+                ? backgroundColor ?? CustomColors.customSwatchColor
+                : Colors.transparent,
           ),
           child: isActive
               ? const Icon(
@@ -56,8 +84,28 @@ class _StatusDot extends StatelessWidget {
               : const SizedBox.shrink(),
         ),
         const SizedBox(width: 5),
-        Expanded(child: Text(title)),
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 12),
+          ),
+        ),
       ],
+    );
+  }
+}
+
+class _CustomDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 10,
+      width: 2,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 9,
+        vertical: 3,
+      ),
+      color: Colors.grey.shade300,
     );
   }
 }
