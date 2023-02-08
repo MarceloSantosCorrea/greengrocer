@@ -15,9 +15,14 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
+  final UtilsService utilService = UtilsService();
+
   void removeItemFromCart(CartItemModel cartItem) {
     setState(() {
       app_data.cartItems.remove(cartItem);
+      utilService.showToast(
+        message: '${cartItem.item.itemName} removido(a) do carrinho',
+      );
     });
   }
 
@@ -30,8 +35,6 @@ class _CartTabState extends State<CartTab> {
 
     return total;
   }
-
-  final UtilsService utilService = UtilsService();
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +104,11 @@ class _CartTabState extends State<CartTab> {
                           builder: (_) => PaymentDialog(
                             order: app_data.orders.first,
                           ),
+                        );
+                      } else {
+                        utilService.showToast(
+                          message: 'Pedido não confirmado',
+                          isError: true,
                         );
                       }
                     },
