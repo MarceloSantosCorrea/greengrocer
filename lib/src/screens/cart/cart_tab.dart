@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:greengrocer/src/config/app_data.dart' as app_data;
-import 'package:greengrocer/src/screens/widgets/payment_dialog.dart';
 
+import '../../config/app_data.dart' as app_data;
 import '../../config/custom_colors.dart';
 import '../../models/cart_item_model.dart';
 import '../../services/utils_service.dart';
+import '../widgets/payment_dialog.dart';
 import 'components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
@@ -86,10 +86,11 @@ class _CartTabState extends State<CartTab> {
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: CustomColors.customSwatchColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )),
+                      backgroundColor: CustomColors.customSwatchColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                    ),
                     onPressed: () async {
                       bool? result = await showOrderConfirmation();
 
