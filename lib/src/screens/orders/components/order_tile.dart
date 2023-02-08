@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/services/utils_service.dart';
 
 import '../../../models/order_model.dart';
@@ -36,8 +38,68 @@ class OrderTile extends StatelessWidget {
               ),
             ],
           ),
-          children: [],
+          childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          children: [
+            SizedBox(
+              height: 150,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: ListView(
+                      children: order.items.map((orderItem) {
+                        return _OrderItemWidget(
+                          utilsService: utilsService,
+                          orderItem: orderItem,
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(color: Colors.blue),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class _OrderItemWidget extends StatelessWidget {
+  const _OrderItemWidget({
+    Key? key,
+    required this.utilsService,
+    required this.orderItem,
+  }) : super(key: key);
+
+  final UtilsService utilsService;
+  final CartItemModel orderItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Text(
+            '${orderItem.quantity} ${orderItem.item.unit} ',
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Expanded(
+            child: Text(orderItem.item.itemName),
+          ),
+          Text(
+            utilsService.priceToCurrency(
+              orderItem.totalPrice(),
+            ),
+          ),
+        ],
       ),
     );
   }
