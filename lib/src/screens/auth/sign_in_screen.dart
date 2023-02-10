@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../config/custom_colors.dart';
 import '../auth/sign_up_screen.dart';
 import '../base/base_screen.dart';
+import '../widgets/app_name_widget.dart';
 import '../widgets/custom_text_field.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -24,27 +25,9 @@ class SignInScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text.rich(
-                      TextSpan(
-                          style: const TextStyle(
-                            fontSize: 40.0,
-                          ),
-                          children: [
-                            const TextSpan(
-                              text: 'Green',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'grocer',
-                              style: TextStyle(
-                                color: CustomColors.customContrastColor,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ]),
+                    const AppNameWidget(
+                      greenTileColor: Colors.white,
+                      textSize: 40.0,
                     ),
                     SizedBox(
                       height: 30.0,

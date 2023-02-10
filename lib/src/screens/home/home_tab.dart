@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../config/app_data.dart' as app_data;
 import '../../config/custom_colors.dart';
 import '../home/components/category_tile.dart';
+import '../widgets/app_name_widget.dart';
 import 'components/item_tile.dart';
 
 class HomeTab extends StatefulWidget {
@@ -31,29 +32,7 @@ class _HomeTabState extends State<HomeTab> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text.rich(
-          TextSpan(
-            style: const TextStyle(
-              fontSize: 30.0,
-            ),
-            children: [
-              TextSpan(
-                text: 'Green',
-                style: TextStyle(
-                  color: CustomColors.customSwatchColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              TextSpan(
-                text: 'grocer',
-                style: TextStyle(
-                  color: CustomColors.customContrastColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
+        title: const AppNameWidget(),
         actions: [
           Padding(
             padding: const EdgeInsets.only(
