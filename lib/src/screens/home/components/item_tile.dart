@@ -107,7 +107,6 @@ class _ItemTileState extends State<ItemTile> {
             child: Material(
               child: InkWell(
                 onTap: () {
-                  print('clicou');
                   switchIcon();
                   widget.cartAnimationMethod(imageGk);
                 },
