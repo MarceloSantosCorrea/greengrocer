@@ -8,11 +8,13 @@ import '../widgets/app_name_widget.dart';
 import '../widgets/custom_text_field.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  SignInScreen({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: CustomColors.customSwatchColor,
       body: SingleChildScrollView(
@@ -63,35 +65,62 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const CustomTextField(
-                      icon: Icons.email,
-                      label: 'Email',
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const CustomTextField(
-                      icon: Icons.lock,
-                      label: 'Senha',
-                      isSecret: true,
-                    ),
-                    SizedBox(
-                      height: 50.0,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Get.offNamed(ScreensRoutes.baseRoute);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          CustomTextField(
+                            icon: Icons.email,
+                            label: 'Email',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (email) {
+                              if (email == null || email.isEmpty) {
+                                return 'Digite seu email';
+                              }
+
+                              if (!email.isEmail) {
+                                return 'Digite um email válido';
+                              }
+
+                              return null;
+                            },
                           ),
-                        ),
-                        child: const Text(
-                          'Entrar',
-                          style: TextStyle(
-                            fontSize: 18.0,
+                          CustomTextField(
+                            icon: Icons.lock,
+                            label: 'Senha',
+                            isSecret: true,
+                            validator: (password) {
+                              if (password == null || password.isEmpty) {
+                                return 'Digite sea senha';
+                              }
+
+                              return null;
+                            },
                           ),
-                        ),
+                          SizedBox(
+                            height: 50.0,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  Get.offNamed(ScreensRoutes.baseRoute);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
+                              ),
+                              child: const Text(
+                                'Entrar',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Align(
@@ -136,8 +165,10 @@ class SignInScreen extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                           ),
-                          side:
-                              const BorderSide(width: 2.0, color: Colors.green),
+                          side: const BorderSide(
+                            width: 2.0,
+                            color: Colors.green,
+                          ),
                         ),
                         onPressed: () {
                           Get.toNamed(ScreensRoutes.signUpRoute);
