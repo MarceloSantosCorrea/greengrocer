@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import 'src/screens/auth/controller/auth.controller.dart';
 import 'src/screens_routes/app_screens.dart';
 
 void main() {
@@ -9,6 +10,7 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((_) {
+    Get.put(AuthController());
     runApp(const App());
   });
 }

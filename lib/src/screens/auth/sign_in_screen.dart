@@ -6,10 +6,17 @@ import '../../config/custom_colors.dart';
 import '../../screens_routes/app_screens.dart';
 import '../widgets/app_name_widget.dart';
 import '../widgets/custom_text_field.dart';
+import 'controller/auth.controller.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController(
+    text: 'marcelocorrea229@gmail.com',
+  );
+  final passwordController = TextEditingController(
+    text: 'Marsc2014',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +72,7 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Form(
                       key: _formKey,
@@ -72,6 +80,7 @@ class SignInScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           CustomTextField(
+                            controller: emailController,
                             icon: Icons.email,
                             label: 'Email',
                             keyboardType: TextInputType.emailAddress,
@@ -88,6 +97,7 @@ class SignInScreen extends StatelessWidget {
                             },
                           ),
                           CustomTextField(
+                            controller: passwordController,
                             icon: Icons.lock,
                             label: 'Senha',
                             isSecret: true,
@@ -101,23 +111,46 @@ class SignInScreen extends StatelessWidget {
                           ),
                           SizedBox(
                             height: 50.0,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  Get.offNamed(ScreensRoutes.baseRoute);
-                                }
+                            child: GetX<AuthController>(
+                              builder: (authController) {
+                                return ElevatedButton(
+                                  onPressed: authController.isLoading.value
+                                      ? null
+                                      : () {
+                                          FocusScope.of(context).unfocus();
+
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            final String email =
+                                                emailController.text;
+                                            final String password =
+                                                emailController.text;
+
+                                            authController.signIn(
+                                              email: email,
+                                              password: password,
+                                            );
+                                            print(
+                                                'Email: $email Senha: $password');
+
+                                            // Get.offNamed(ScreensRoutes.baseRoute);
+                                          }
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
+                                  ),
+                                  child: authController.isLoading.value
+                                      ? const CircularProgressIndicator()
+                                      : const Text(
+                                          'Entrar',
+                                          style: TextStyle(
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                );
                               },
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                              ),
-                              child: const Text(
-                                'Entrar',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                              ),
                             ),
                           ),
                         ],
