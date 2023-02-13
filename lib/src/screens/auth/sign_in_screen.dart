@@ -1,9 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/custom_colors.dart';
-import '../auth/sign_up_screen.dart';
-import '../base/base_screen.dart';
+import '../../screens_routes/app_screens.dart';
 import '../widgets/app_name_widget.dart';
 import '../widgets/custom_text_field.dart';
 
@@ -79,11 +79,7 @@ class SignInScreen extends StatelessWidget {
                       height: 50.0,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (c) => const BaseScreen(),
-                            ),
-                          );
+                          Get.offNamed(ScreensRoutes.baseRoute);
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -144,11 +140,7 @@ class SignInScreen extends StatelessWidget {
                               const BorderSide(width: 2.0, color: Colors.green),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (c) => SignUpScreen(),
-                            ),
-                          );
+                          Get.toNamed(ScreensRoutes.signUpRoute);
                         },
                         child: const Text(
                           'Criar conta',

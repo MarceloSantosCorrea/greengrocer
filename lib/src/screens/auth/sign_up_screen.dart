@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../config/custom_colors.dart';
@@ -114,7 +115,7 @@ class SignUpScreen extends StatelessWidget {
                 child: SafeArea(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios,
