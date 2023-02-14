@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../constants/storage_keys.dart';
 import '../../../models/user_model.dart';
 import '../../../screens_routes/app_screens.dart';
 import '../../../services/utils_service.dart';
@@ -13,6 +14,34 @@ class AuthController extends GetxController {
   final utilsService = UtilsService();
 
   UserModel user = UserModel();
+
+  Future<void> validateToken() async {
+    String? token = await utilsService.getLocalData(key: StorageKeys.token);
+    if (token == null) {
+      Get.offNamed(ScreensRoutes.signInRoute);
+      return;
+    }
+
+    AuthResult result = await authRepository.validateToken(token);
+    result.when(
+      success: (user) {
+        this.user = user;
+        saveTokenAndProceedToBase();
+      },
+      error: (message) {},
+    );
+  }
+
+  Future<void> signOut() async {
+    user = UserModel();
+    await utilsService.removeLocalData(key: StorageKeys.token);
+    Get.offNamed(ScreensRoutes.signInRoute);
+  }
+
+  void saveTokenAndProceedToBase() {
+    utilsService.saveLocalData(key: StorageKeys.token, data: user.token!);
+    Get.offNamed(ScreensRoutes.baseRoute);
+  }
 
   Future<void> signIn({
     required String email,
@@ -30,7 +59,7 @@ class AuthController extends GetxController {
     result.when(
       success: (user) {
         this.user = user;
-        Get.offNamed(ScreensRoutes.baseRoute);
+        saveTokenAndProceedToBase();
       },
       error: (message) {
         utilsService.showToast(
