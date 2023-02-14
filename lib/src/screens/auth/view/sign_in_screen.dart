@@ -12,10 +12,10 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController(
-    text: 'marcelocorrea229@gmail.com',
+    text: 'greengrocerteste@gmail.com',
   );
   final passwordController = TextEditingController(
-    text: 'Marsc2014',
+    text: 'senha123',
   );
 
   @override
@@ -124,7 +124,7 @@ class SignInScreen extends StatelessWidget {
                                             final String email =
                                                 emailController.text;
                                             final String password =
-                                                emailController.text;
+                                                passwordController.text;
 
                                             authController.signIn(
                                               email: email,

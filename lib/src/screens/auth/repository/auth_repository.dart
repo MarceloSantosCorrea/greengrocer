@@ -1,4 +1,5 @@
 import '../../../constants/endpoints.dart';
+import '../../../models/user_model.dart';
 import '../../../services/http_manager.dart';
 
 class AuthRepository {
@@ -15,8 +16,13 @@ class AuthRepository {
 
     if (result['result'] != null) {
       print('Login funcionou');
+      print(result['result']);
+      final user = UserModel.fromMap(result['result']);
+
+      print(user.toString());
     } else {
       print('Login não funcionou');
+      print(result['error']);
     }
   }
 }
