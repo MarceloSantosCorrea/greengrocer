@@ -1,10 +1,13 @@
 import '../../../constants/endpoints.dart';
 import '../../../models/user_model.dart';
 import '../../../services/http_manager.dart';
+import '../result/auth_result.dart';
+import 'auth_erros.dart' as auth_errors;
 
 class AuthRepository {
   final HttpManager _httpManager = HttpManager();
-  Future signIn({required String email, required String password}) async {
+  Future<AuthResult> signIn(
+      {required String email, required String password}) async {
     final result = await _httpManager.restRequest(
       url: Endpoints.signin,
       method: HttpMethods.post,
@@ -15,14 +18,12 @@ class AuthRepository {
     );
 
     if (result['result'] != null) {
-      print('Login funcionou');
-      print(result['result']);
       final user = UserModel.fromJson(result['result']);
-
-      print(user.toString());
+      return AuthResult.success(user);
     } else {
-      print('Login não funcionou');
-      print(result['error']);
+      return AuthResult.error(
+        auth_errors.authErrorsString(result['error']),
+      );
     }
   }
 }
