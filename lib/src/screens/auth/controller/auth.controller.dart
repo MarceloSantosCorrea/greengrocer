@@ -15,6 +15,13 @@ class AuthController extends GetxController {
 
   UserModel user = UserModel();
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    validateToken();
+  }
+
   Future<void> validateToken() async {
     String? token = await utilsService.getLocalData(key: StorageKeys.token);
     if (token == null) {
@@ -54,8 +61,6 @@ class AuthController extends GetxController {
       password: password,
     );
 
-    isLoading.value = false;
-
     result.when(
       success: (user) {
         this.user = user;
@@ -68,5 +73,7 @@ class AuthController extends GetxController {
         );
       },
     );
+
+    isLoading.value = false;
   }
 }

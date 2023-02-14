@@ -30,6 +30,8 @@ dev_dependencies:
   json_serializable: ^6.6.1
   build_runner: ^2.3.3
   # flutter pub run build_runner build
+  # flutter clean
+  # flutter pub get
 flutter:
   uses-material-design: true
   assets:
