@@ -1,8 +1,12 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'user_model.g.dart';
+
+@JsonSerializable()
 class UserModel {
   String? id;
   String? token;
+  @JsonKey(name: 'fullname')
   String? name;
   String? email;
   String? phone;
@@ -19,50 +23,10 @@ class UserModel {
     this.password,
   });
 
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
 
-    if (id != null) {
-      result.addAll({'id': id});
-    }
-    if (token != null) {
-      result.addAll({'token': token});
-    }
-    if (name != null) {
-      result.addAll({'fullname': name});
-    }
-    if (email != null) {
-      result.addAll({'email': email});
-    }
-    if (phone != null) {
-      result.addAll({'phone': phone});
-    }
-    if (cpf != null) {
-      result.addAll({'cpf': cpf});
-    }
-    if (password != null) {
-      result.addAll({'password': password});
-    }
-
-    return result;
-  }
-
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
-      id: map['id'],
-      token: map['token'],
-      name: map['fullname'],
-      email: map['email'],
-      phone: map['phone'],
-      cpf: map['cpf'],
-      password: map['password'],
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
   @override
   String toString() {

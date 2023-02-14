@@ -19,10 +19,14 @@ dependencies:
   shimmer: ^2.0.0
   get: ^4.6.5
   dio: ^5.0.0
+  json_annotation: ^4.8.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  json_serializable: ^6.6.1
+  build_runner: ^2.3.3
+  # flutter pub run build_runner build
 flutter:
   uses-material-design: true
   assets:
