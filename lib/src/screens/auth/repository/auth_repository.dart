@@ -5,7 +5,8 @@ import '../result/auth_result.dart';
 import 'auth_erros.dart' as auth_errors;
 
 class AuthRepository {
-  final HttpManager _httpManager = HttpManager();
+  final _httpManager = HttpManager();
+
   Future<AuthResult> signIn(
       {required String email, required String password}) async {
     final result = await _httpManager.restRequest(

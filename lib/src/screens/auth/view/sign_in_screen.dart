@@ -130,10 +130,6 @@ class SignInScreen extends StatelessWidget {
                                               email: email,
                                               password: password,
                                             );
-                                            print(
-                                                'Email: $email Senha: $password');
-
-                                            // Get.offNamed(ScreensRoutes.baseRoute);
                                           }
                                         },
                                   style: ElevatedButton.styleFrom(
