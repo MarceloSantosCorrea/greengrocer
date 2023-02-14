@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../config/custom_colors.dart';
 import '../../../screens_routes/app_screens.dart';
+import '../../../services/validators.dart';
 import '../../widgets/app_name_widget.dart';
 import '../../widgets/custom_text_field.dart';
 import '../controller/auth.controller.dart';
@@ -84,30 +85,14 @@ class SignInScreen extends StatelessWidget {
                             icon: Icons.email,
                             label: 'Email',
                             keyboardType: TextInputType.emailAddress,
-                            validator: (email) {
-                              if (email == null || email.isEmpty) {
-                                return 'Digite seu email';
-                              }
-
-                              if (!email.isEmail) {
-                                return 'Digite um email válido';
-                              }
-
-                              return null;
-                            },
+                            validator: emailValidator,
                           ),
                           CustomTextField(
                             controller: passwordController,
                             icon: Icons.lock,
                             label: 'Senha',
                             isSecret: true,
-                            validator: (password) {
-                              if (password == null || password.isEmpty) {
-                                return 'Digite sea senha';
-                              }
-
-                              return null;
-                            },
+                            validator: passwordValidator,
                           ),
                           SizedBox(
                             height: 50.0,

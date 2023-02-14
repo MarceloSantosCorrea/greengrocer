@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../config/custom_colors.dart';
+import '../../../services/validators.dart';
 import '../../widgets/custom_text_field.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -17,6 +18,8 @@ class SignUpScreen extends StatelessWidget {
   );
 
   SignUpScreen({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,58 +57,67 @@ class SignUpScreen extends StatelessWidget {
                         top: Radius.circular(45.0),
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const CustomTextField(
-                          icon: Icons.person,
-                          label: 'Nome',
-                        ),
-                        CustomTextField(
-                          icon: Icons.file_copy,
-                          label: 'CPF',
-                          inputFormatters: [cpfFormatter],
-                          keyboardType: TextInputType.number,
-                        ),
-                        CustomTextField(
-                          icon: Icons.phone,
-                          label: 'Celular',
-                          inputFormatters: [phoneFormatter],
-                          keyboardType: TextInputType.phone,
-                        ),
-                        const CustomTextField(
-                          icon: Icons.email,
-                          label: 'Email',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        const CustomTextField(
-                          icon: Icons.lock,
-                          label: 'Senha',
-                          isSecret: true,
-                        ),
-                        const CustomTextField(
-                          icon: Icons.lock,
-                          label: 'Confirme a senha',
-                          isSecret: true,
-                        ),
-                        SizedBox(
-                          height: 50.0,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const CustomTextField(
+                            icon: Icons.person,
+                            label: 'Nome',
+                            validator: nameValidator,
+                          ),
+                          CustomTextField(
+                            icon: Icons.file_copy,
+                            label: 'CPF',
+                            inputFormatters: [cpfFormatter],
+                            keyboardType: TextInputType.number,
+                            validator: cpfValidator,
+                          ),
+                          CustomTextField(
+                            icon: Icons.phone,
+                            label: 'Celular',
+                            inputFormatters: [phoneFormatter],
+                            keyboardType: TextInputType.phone,
+                            validator: phoneValidator,
+                          ),
+                          const CustomTextField(
+                            icon: Icons.email,
+                            label: 'Email',
+                            keyboardType: TextInputType.emailAddress,
+                            validator: emailValidator,
+                          ),
+                          const CustomTextField(
+                            icon: Icons.lock,
+                            label: 'Senha',
+                            isSecret: true,
+                            validator: passwordValidator,
+                          ),
+                          const CustomTextField(
+                            icon: Icons.lock,
+                            label: 'Confirme a senha',
+                            isSecret: true,
+                            validator: passwordValidator,
+                          ),
+                          SizedBox(
+                            height: 50.0,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ),
                               ),
-                            ),
-                            child: const Text(
-                              'Cadastrar usuário',
-                              style: TextStyle(
-                                fontSize: 18.0,
+                              child: const Text(
+                                'Cadastrar usuário',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
