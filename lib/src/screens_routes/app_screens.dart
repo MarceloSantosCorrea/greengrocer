@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import '../screens/auth/sign_in_screen.dart';
-import '../screens/auth/sign_up_screen.dart';
+import '../screens/auth/view/sign_in_screen.dart';
+import '../screens/auth/view/sign_up_screen.dart';
 import '../screens/base/base_screen.dart';
 import '../screens/splash/splash_screen.dart';
 

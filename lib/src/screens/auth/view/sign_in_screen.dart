@@ -2,11 +2,11 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../config/custom_colors.dart';
-import '../../screens_routes/app_screens.dart';
-import '../widgets/app_name_widget.dart';
-import '../widgets/custom_text_field.dart';
-import 'controller/auth.controller.dart';
+import '../../../config/custom_colors.dart';
+import '../../../screens_routes/app_screens.dart';
+import '../../widgets/app_name_widget.dart';
+import '../../widgets/custom_text_field.dart';
+import '../controller/auth.controller.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
