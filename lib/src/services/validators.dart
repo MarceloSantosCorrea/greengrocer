@@ -43,7 +43,7 @@ String? phoneValidator(String? phone) {
     return 'Digite um celular';
   }
 
-  if (!phone.isPhoneNumber) {
+  if (phone.length < 14 || !phone.isPhoneNumber) {
     return 'Digite um número válido';
   }
 
