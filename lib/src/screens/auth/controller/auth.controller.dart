@@ -75,4 +75,24 @@ class AuthController extends GetxController {
 
     isLoading.value = false;
   }
+
+  Future<void> signUp() async {
+    isLoading.value = true;
+    AuthResult result = await authRepository.signUp(user);
+
+    result.when(
+      success: (user) {
+        this.user = user;
+        saveTokenAndProceedToBase();
+      },
+      error: (message) {
+        utilsService.showToast(
+          message: message,
+          isError: true,
+        );
+      },
+    );
+
+    isLoading.value = false;
+  }
 }
