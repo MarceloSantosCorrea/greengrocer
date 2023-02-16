@@ -8,6 +8,7 @@ import '../../../services/validators.dart';
 import '../../widgets/app_name_widget.dart';
 import '../../widgets/custom_text_field.dart';
 import '../controller/auth.controller.dart';
+import 'components/forgot_password_dialog.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
@@ -140,7 +141,15 @@ class SignInScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (_) => ForgotPasswordDialog(
+                              email: emailController.text,
+                            ),
+                          );
+                        },
                         child: Text(
                           'Esqueceu a senha?',
                           style: TextStyle(
