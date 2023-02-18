@@ -42,7 +42,9 @@ class HomeController extends GetxController {
 
     debounce(
       searchTitle,
-      (callback) {},
+      (callback) {
+        getAllProducts();
+      },
       time: const Duration(milliseconds: 600),
     );
 
