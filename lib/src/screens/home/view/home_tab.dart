@@ -174,10 +174,16 @@ class _HomeTabState extends State<HomeTab> {
                           childAspectRatio: 9 / 11.5,
                         ),
                         itemCount: controller.allProducts.length,
-                        itemBuilder: (_, index) => ItemTile(
-                          item: controller.allProducts[index],
-                          cartAnimationMethod: itemSelectedCartAnimations,
-                        ),
+                        itemBuilder: (_, index) {
+                          if (((index + 1) == controller.allProducts.length) &&
+                              !controller.isLastPage) {
+                            controller.loadMoreProducts();
+                          }
+                          return ItemTile(
+                            item: controller.allProducts[index],
+                            cartAnimationMethod: itemSelectedCartAnimations,
+                          );
+                        },
                       )
                     : GridView.count(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
