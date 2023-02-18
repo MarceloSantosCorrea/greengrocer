@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../models/category_model.dart';
+import '../../../models/item_model.dart';
 import '../../../services/utils_service.dart';
 import '../repository/home_repository.dart';
 import '../result/home_result.dart';
@@ -13,6 +14,8 @@ class HomeController extends GetxController {
   List<CategoryModel> allCategories = [];
   CategoryModel? currentCategory;
 
+  List<ItemModel> allProducts = [];
+
   void setLoading(bool value) {
     isLoading = value;
 
@@ -23,6 +26,12 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     getAllCategories();
+  }
+
+  void selectCategory(CategoryModel category) {
+    currentCategory = category;
+    update();
+    getAllProducts();
   }
 
   Future<void> getAllCategories() async {
@@ -38,7 +47,6 @@ class HomeController extends GetxController {
         selectCategory(allCategories.first);
       },
       error: (message) {
-        print('Erro ao carregar a categorias: $message');
         utilsService.showToast(
           message: message,
           isError: true,
@@ -47,8 +55,28 @@ class HomeController extends GetxController {
     );
   }
 
-  void selectCategory(CategoryModel category) {
-    currentCategory = category;
-    update();
+  Future<void> getAllProducts() async {
+    setLoading(true);
+    Map<String, dynamic> body = {
+      'page': 0,
+      'title': null,
+      'categoryId': currentCategory?.id,
+      'itemsPerPage': 6,
+    };
+    HomeResult<ItemModel> homeResult = await homeRepoitory.getAllProducts(body);
+    setLoading(false);
+
+    homeResult.when(
+      success: (data) {
+        allProducts.assignAll(data);
+        if (allProducts.isEmpty) return;
+      },
+      error: (message) {
+        utilsService.showToast(
+          message: message,
+          isError: true,
+        );
+      },
+    );
   }
 }
