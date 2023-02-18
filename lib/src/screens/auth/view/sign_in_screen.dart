@@ -18,7 +18,7 @@ class SignInScreen extends StatelessWidget {
     text: 'marcelocorrea229@gmail.com',
   );
   final passwordController = TextEditingController(
-    text: 'marcelo123',
+    text: 'marcelocorrea',
   );
 
   final utilsService = UtilsService();
