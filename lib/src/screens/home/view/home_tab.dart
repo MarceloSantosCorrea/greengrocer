@@ -3,11 +3,11 @@ import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 
-import '../../config/app_data.dart' as app_data;
-import '../../config/custom_colors.dart';
-import '../home/components/category_tile.dart';
-import '../widgets/app_name_widget.dart';
-import '../widgets/custom_shimmer.dart';
+import '../../../config/app_data.dart' as app_data;
+import '../../../config/custom_colors.dart';
+import '../../widgets/app_name_widget.dart';
+import '../../widgets/custom_shimmer.dart';
+import 'components/category_tile.dart';
 import 'components/item_tile.dart';
 
 class HomeTab extends StatefulWidget {

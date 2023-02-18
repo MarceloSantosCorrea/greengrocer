@@ -21,9 +21,12 @@ abstract class AppScreens {
       page: () => SignUpScreen(),
     ),
     GetPage(
-        name: ScreensRoutes.baseRoute,
-        page: () => const BaseScreen(),
-        bindings: [HomeBinding()]),
+      name: ScreensRoutes.baseRoute,
+      page: () => const BaseScreen(),
+      bindings: [
+        HomeBinding(),
+      ],
+    ),
   ];
 }
 
