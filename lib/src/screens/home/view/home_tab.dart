@@ -4,7 +4,6 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../config/app_data.dart' as app_data;
 import '../../../config/custom_colors.dart';
 import '../../widgets/app_name_widget.dart';
 import '../../widgets/custom_shimmer.dart';
@@ -124,7 +123,7 @@ class _HomeTabState extends State<HomeTab> {
               return Container(
                 padding: const EdgeInsets.only(left: 20.0),
                 height: 40.0,
-                child: !controller.isLoading
+                child: !controller.isCategoryLoading
                     ? ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (_, index) {
@@ -163,7 +162,7 @@ class _HomeTabState extends State<HomeTab> {
             // Grid de Produtos
             GetBuilder<HomeController>(builder: (controller) {
               return Expanded(
-                child: !controller.isLoading
+                child: !controller.isProductLoading
                     ? GridView.builder(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         physics: const BouncingScrollPhysics(),
@@ -174,9 +173,9 @@ class _HomeTabState extends State<HomeTab> {
                           crossAxisSpacing: 10,
                           childAspectRatio: 9 / 11.5,
                         ),
-                        itemCount: app_data.items.length,
+                        itemCount: controller.allProducts.length,
                         itemBuilder: (_, index) => ItemTile(
-                          item: app_data.items[index],
+                          item: controller.allProducts[index],
                           cartAnimationMethod: itemSelectedCartAnimations,
                         ),
                       )

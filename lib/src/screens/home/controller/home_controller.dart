@@ -12,14 +12,19 @@ class HomeController extends GetxController {
   final homeRepoitory = HomeRepository();
   final utilsService = UtilsService();
 
-  bool isLoading = false;
+  bool isCategoryLoading = false;
+  bool isProductLoading = true;
   List<CategoryModel> allCategories = [];
   CategoryModel? currentCategory;
 
-  List<ItemModel> allProducts = [];
+  List<ItemModel> get allProducts => currentCategory?.items ?? [];
 
-  void setLoading(bool value) {
-    isLoading = value;
+  void setLoading(bool value, {bool isProduct = false}) {
+    if (!isProduct) {
+      isCategoryLoading = value;
+    } else {
+      isProductLoading = value;
+    }
 
     update();
   }
@@ -33,6 +38,7 @@ class HomeController extends GetxController {
   void selectCategory(CategoryModel category) {
     currentCategory = category;
     update();
+    if (currentCategory!.items.isNotEmpty) return;
     getAllProducts();
   }
 
@@ -58,7 +64,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getAllProducts() async {
-    setLoading(true);
+    setLoading(true, isProduct: true);
     Map<String, dynamic> body = {
       'page': currentCategory!.pagination,
       // 'title': null,
@@ -66,13 +72,11 @@ class HomeController extends GetxController {
       'itemsPerPage': itemsPerPage,
     };
     HomeResult<ItemModel> homeResult = await homeRepoitory.getAllProducts(body);
-    setLoading(false);
+    setLoading(false, isProduct: true);
 
     homeResult.when(
       success: (data) {
-        print(data);
-        allProducts.assignAll(data);
-        if (allProducts.isEmpty) return;
+        currentCategory!.items = data;
       },
       error: (message) {
         utilsService.showToast(
