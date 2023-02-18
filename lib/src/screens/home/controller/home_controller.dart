@@ -6,6 +6,8 @@ import '../../../services/utils_service.dart';
 import '../repository/home_repository.dart';
 import '../result/home_result.dart';
 
+const int itemsPerPage = 6;
+
 class HomeController extends GetxController {
   final homeRepoitory = HomeRepository();
   final utilsService = UtilsService();
@@ -58,16 +60,17 @@ class HomeController extends GetxController {
   Future<void> getAllProducts() async {
     setLoading(true);
     Map<String, dynamic> body = {
-      'page': 0,
-      'title': null,
-      'categoryId': currentCategory?.id,
-      'itemsPerPage': 6,
+      'page': currentCategory!.pagination,
+      // 'title': null,
+      'categoryId': currentCategory!.id,
+      'itemsPerPage': itemsPerPage,
     };
     HomeResult<ItemModel> homeResult = await homeRepoitory.getAllProducts(body);
     setLoading(false);
 
     homeResult.when(
       success: (data) {
+        print(data);
         allProducts.assignAll(data);
         if (allProducts.isEmpty) return;
       },
