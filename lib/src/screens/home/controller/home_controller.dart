@@ -19,6 +19,8 @@ class HomeController extends GetxController {
 
   List<ItemModel> get allProducts => currentCategory?.items ?? [];
 
+  RxString searchTitle = ''.obs;
+
   bool get isLastPage {
     if (currentCategory!.items.length < itemsPerPage) return true;
     return currentCategory!.pagination * itemsPerPage > allProducts.length;
@@ -37,6 +39,13 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    debounce(
+      searchTitle,
+      (callback) {},
+      time: const Duration(milliseconds: 600),
+    );
+
     getAllCategories();
   }
 
@@ -75,7 +84,7 @@ class HomeController extends GetxController {
 
     Map<String, dynamic> body = {
       'page': currentCategory!.pagination,
-      // 'title': null,
+      'title': searchTitle,
       'categoryId': currentCategory!.id,
       'itemsPerPage': itemsPerPage,
     };
