@@ -42,9 +42,7 @@ class HomeController extends GetxController {
 
     debounce(
       searchTitle,
-      (callback) {
-        getAllProducts();
-      },
+      (callback) => filterByTitle(),
       time: const Duration(milliseconds: 600),
     );
 
@@ -117,10 +115,18 @@ class HomeController extends GetxController {
 
     Map<String, dynamic> body = {
       'page': currentCategory!.pagination,
-      // 'title': searchTitle,
       'categoryId': currentCategory!.id,
       'itemsPerPage': itemsPerPage,
     };
+
+    if (searchTitle.value.isNotEmpty) {
+      body['title'] = searchTitle.value;
+
+      if (currentCategory!.id == '') {
+        body.remove('categoryId');
+      }
+    }
+
     HomeResult<ItemModel> homeResult = await homeRepoitory.getAllProducts(body);
     setLoading(false, isProduct: true);
 
