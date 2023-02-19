@@ -28,6 +28,12 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -92,6 +98,7 @@ class _HomeTabState extends State<HomeTab> {
                     vertical: 10.0,
                   ),
                   child: TextFormField(
+                    controller: searchController,
                     onChanged: (value) => controller.searchTitle.value = value,
                     decoration: InputDecoration(
                       filled: true,
