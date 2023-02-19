@@ -79,6 +79,37 @@ class HomeController extends GetxController {
     );
   }
 
+  void filterByTitle() {
+    for (var category in allCategories) {
+      category.items.clear();
+      category.pagination = 0;
+    }
+
+    if (searchTitle.value.isEmpty) {
+      allCategories.removeAt(0);
+    } else {
+      CategoryModel? c = allCategories.firstWhereOrNull((cat) => cat.id == '');
+
+      if (c == null) {
+        final allProductsCategory = CategoryModel(
+          title: 'Todos',
+          id: '',
+          items: [],
+          pagination: 0,
+        );
+
+        allCategories.insert(0, allProductsCategory);
+      } else {
+        c.items.clear();
+        c.pagination = 0;
+      }
+    }
+
+    currentCategory = allCategories.first;
+    update();
+    getAllProducts();
+  }
+
   Future<void> getAllProducts({bool canLoad = true}) async {
     if (canLoad) {
       setLoading(true, isProduct: true);
@@ -86,7 +117,7 @@ class HomeController extends GetxController {
 
     Map<String, dynamic> body = {
       'page': currentCategory!.pagination,
-      'title': searchTitle,
+      // 'title': searchTitle,
       'categoryId': currentCategory!.id,
       'itemsPerPage': itemsPerPage,
     };
