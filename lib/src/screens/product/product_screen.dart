@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/custom_colors.dart';
 import '../../models/item_model.dart';
 import '../../services/utils_service.dart';
+import '../base/controller/navigation_controller.dart';
 import '../widgets/quantity_widget.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -21,6 +23,7 @@ class _ProductScreenState extends State<ProductScreen> {
   final UtilsService utilsService = UtilsService();
 
   int cartItemQuantity = 1;
+  final navigationController = Get.find<NavigationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,12 @@ class _ProductScreenState extends State<ProductScreen> {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                            navigationController.navigatePageView(
+                              NavigationTabls.cart,
+                            );
+                          },
                           label: const Text(
                             'Add no carrinho',
                             style: TextStyle(
