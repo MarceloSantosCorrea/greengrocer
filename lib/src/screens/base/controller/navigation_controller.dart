@@ -12,28 +12,36 @@ class NavigationController extends GetxController {
   late PageController _pageController;
   late RxInt _currentIndex;
 
+  PageController get pageController => _pageController;
+  int get currentIndex => _currentIndex.value;
+
   @override
   void onInit() {
     super.onInit();
 
-    initNavigation(
+    _initNavigation(
       pageController: PageController(initialPage: NavigationTabls.home),
       currentIndex: NavigationTabls.home,
     );
   }
 
-  void initNavigation({
+  void _initNavigation({
     required PageController pageController,
     required int currentIndex,
   }) {
     _pageController = pageController;
-    _currentIndex.value = currentIndex;
+    _currentIndex = currentIndex.obs;
   }
 
   void navigatePageView(int page) {
     if (_currentIndex.value == page) return;
 
-    _pageController.jumpToPage(page);
+    _pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 700),
+      curve: Curves.ease,
+    );
+
     _currentIndex.value = page;
   }
 }
