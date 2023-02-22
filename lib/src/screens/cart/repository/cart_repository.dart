@@ -34,4 +34,30 @@ class CartRepository {
       );
     }
   }
+
+  Future<CartResponse<String>> addItemToCart({
+    required String userId,
+    required String token,
+    required String productId,
+    required int quantity,
+  }) async {
+    final result = await _httpManager.restRequest(
+      url: Endpoints.addItemToCart,
+      method: HttpMethods.post,
+      body: {
+        'user': userId,
+        'quantity': quantity,
+        'productId': productId,
+      },
+      headers: {'token': token},
+    );
+
+    if (result['result'] != null) {
+      return CartResponse.success(result['result']['id']);
+    } else {
+      return CartResponse.error(
+        'Não foi possível adicionar item no carrinho',
+      );
+    }
+  }
 }

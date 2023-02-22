@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../models/cart_item_model.dart';
+import '../../../models/item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../auth/controller/auth.controller.dart';
 import '../repository/cart_repository.dart';
@@ -50,5 +51,36 @@ class CartController extends GetxController {
         );
       },
     );
+  }
+
+  int getItemIndex(ItemModel item) {
+    return cartItems.indexWhere((itemInList) => itemInList.id == item.id);
+  }
+
+  Future<void> addItemToCart({
+    required ItemModel item,
+    int quantity = 1,
+  }) async {
+    int itemIndex = getItemIndex(item);
+
+    if (itemIndex >= 0) {
+      cartItems[itemIndex].quantity += quantity;
+    } else {
+      cartRepository.addItemToCart(
+        userId: userId,
+        token: token,
+        productId: productId,
+        quantity: quantity,
+      );
+
+      cartItems.add(
+        CartItemModel(
+          id: '',
+          item: item,
+          quantity: quantity,
+        ),
+      );
+    }
+    update();
   }
 }
