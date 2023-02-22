@@ -1,4 +1,3 @@
-import '../models/cart_item_model.dart';
 import '../models/item_model.dart';
 import '../models/order_model.dart';
 import '../models/user_model.dart';
@@ -75,11 +74,11 @@ List<String> categories = [
   'Cereais',
 ];
 
-List<CartItemModel> cartItems = [
-  CartItemModel(item: apple, quantity: 2),
-  CartItemModel(item: grape, quantity: 1),
-  CartItemModel(item: guava, quantity: 3),
-];
+// List<CartItemModel> cartItems = [
+//   CartItemModel(item: apple, quantity: 2),
+//   CartItemModel(item: grape, quantity: 1),
+//   CartItemModel(item: guava, quantity: 3),
+// ];
 
 UserModel user = UserModel(
   name: 'Marcelo Corrêa',
@@ -103,14 +102,14 @@ List<OrderModel> orders = [
     status: 'pending_payment',
     total: 11.0,
     items: [
-      CartItemModel(
-        item: apple,
-        quantity: 2,
-      ),
-      CartItemModel(
-        item: mango,
-        quantity: 2,
-      ),
+      // CartItemModel(
+      //   item: apple,
+      //   quantity: 2,
+      // ),
+      // CartItemModel(
+      //   item: mango,
+      //   quantity: 2,
+      // ),
     ],
   ),
 
@@ -127,10 +126,10 @@ List<OrderModel> orders = [
     status: 'delivered',
     total: 11.5,
     items: [
-      CartItemModel(
-        item: guava,
-        quantity: 1,
-      ),
+      // CartItemModel(
+      //   item: guava,
+      //   quantity: 1,
+      // ),
     ],
   ),
 ];

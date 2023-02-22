@@ -5,7 +5,6 @@ import '../../../config/custom_colors.dart';
 import '../../../models/cart_item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../widgets/payment_dialog.dart';
-import '../components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -18,22 +17,24 @@ class _CartTabState extends State<CartTab> {
   final UtilsService utilService = UtilsService();
 
   void removeItemFromCart(CartItemModel cartItem) {
-    setState(() {
-      app_data.cartItems.remove(cartItem);
-      utilService.showToast(
-        message: '${cartItem.item.itemName} removido(a) do carrinho',
-      );
-    });
+    // setState(() {
+    //   app_data.cartItems.remove(cartItem);
+    //   utilService.showToast(
+    //     message: '${cartItem.item.itemName} removido(a) do carrinho',
+    //   );
+    // });
   }
 
   double cartTotalPrice() {
-    double total = 0;
+    // double total = 0;
 
-    for (var item in app_data.cartItems) {
-      total += item.totalPrice();
-    }
+    // for (var item in app_data.cartItems) {
+    //   total += item.totalPrice();
+    // }
 
-    return total;
+    // return total;
+
+    return 0;
   }
 
   @override
@@ -46,11 +47,14 @@ class _CartTabState extends State<CartTab> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: app_data.cartItems.length,
-              itemBuilder: (_, index) => CartTile(
-                cartItem: app_data.cartItems[index],
-                remove: removeItemFromCart,
-              ),
+              itemCount: 0,
+              itemBuilder: (_, index) {
+                return Container();
+                //   return CartTile(
+                //   cartItem: app_data.cartItems[index],
+                //   remove: removeItemFromCart,
+                // );
+              },
             ),
           ),
           Container(
