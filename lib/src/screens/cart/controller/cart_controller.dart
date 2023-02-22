@@ -11,10 +11,22 @@ class CartController extends GetxController {
   final authController = Get.find<AuthController>();
   final utilsService = UtilsService();
 
+  List<CartItemModel> cartItems = [];
+
   @override
   void onInit() {
     super.onInit();
     getCartItems();
+  }
+
+  double cartTotalPrice() {
+    double total = 0;
+
+    for (var item in cartItems) {
+      total += item.totalPrice();
+    }
+
+    return total;
   }
 
   Future<void> getCartItems() async {
@@ -26,7 +38,7 @@ class CartController extends GetxController {
 
     response.when(
       success: (data) {
-        // cartItems = data;
+        cartItems = data;
         update();
 
         print(data);

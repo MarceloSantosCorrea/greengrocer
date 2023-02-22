@@ -7,12 +7,10 @@ import '../../widgets/quantity_widget.dart';
 
 class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
-  final Function(CartItemModel) remove;
 
   const CartTile({
     Key? key,
     required this.cartItem,
-    required this.remove,
   }) : super(key: key);
 
   @override
@@ -35,7 +33,7 @@ class _CartTileState extends State<CartTile> {
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: ListTile(
-        leading: Image.asset(
+        leading: Image.network(
           widget.cartItem.item.imgUrl,
           height: 60,
           width: 60,
@@ -56,15 +54,7 @@ class _CartTileState extends State<CartTile> {
         trailing: QuantityWidget(
           value: widget.cartItem.quantity,
           sufixText: widget.cartItem.item.unit,
-          result: (quantity) {
-            setState(() {
-              widget.cartItem.quantity = quantity;
-
-              if (quantity == 0) {
-                widget.remove(widget.cartItem);
-              }
-            });
-          },
+          result: (quantity) {},
           isRemovable: true,
         ),
       ),

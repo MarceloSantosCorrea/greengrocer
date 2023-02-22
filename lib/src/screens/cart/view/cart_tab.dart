@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../config/app_data.dart' as app_data;
 import '../../../config/custom_colors.dart';
-import '../../../models/cart_item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../widgets/payment_dialog.dart';
+import '../components/cart_tile.dart';
+import '../controller/cart_controller.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -16,27 +18,6 @@ class CartTab extends StatefulWidget {
 class _CartTabState extends State<CartTab> {
   final UtilsService utilService = UtilsService();
 
-  void removeItemFromCart(CartItemModel cartItem) {
-    // setState(() {
-    //   app_data.cartItems.remove(cartItem);
-    //   utilService.showToast(
-    //     message: '${cartItem.item.itemName} removido(a) do carrinho',
-    //   );
-    // });
-  }
-
-  double cartTotalPrice() {
-    // double total = 0;
-
-    // for (var item in app_data.cartItems) {
-    //   total += item.totalPrice();
-    // }
-
-    // return total;
-
-    return 0;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,14 +27,16 @@ class _CartTabState extends State<CartTab> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              itemCount: 0,
-              itemBuilder: (_, index) {
-                return Container();
-                //   return CartTile(
-                //   cartItem: app_data.cartItems[index],
-                //   remove: removeItemFromCart,
-                // );
+            child: GetBuilder<CartController>(
+              builder: (controller) {
+                return ListView.builder(
+                  itemCount: controller.cartItems.length,
+                  itemBuilder: (_, index) {
+                    return CartTile(
+                      cartItem: controller.cartItems[index],
+                    );
+                  },
+                );
               },
             ),
           ),
@@ -81,13 +64,17 @@ class _CartTabState extends State<CartTab> {
                     fontSize: 12.0,
                   ),
                 ),
-                Text(
-                  utilService.priceToCurrency(cartTotalPrice()),
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: CustomColors.customSwatchColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                GetBuilder<CartController>(
+                  builder: (controller) {
+                    return Text(
+                      utilService.priceToCurrency(controller.cartTotalPrice()),
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: CustomColors.customSwatchColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(
                   height: 50,
