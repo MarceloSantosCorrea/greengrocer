@@ -4,6 +4,7 @@ import '../screens/auth/view/sign_in_screen.dart';
 import '../screens/auth/view/sign_up_screen.dart';
 import '../screens/base/base_screen.dart';
 import '../screens/base/binding/navigation_binding.dart';
+import '../screens/cart/binding/cart_binding.dart';
 import '../screens/home/binding/home_binding.dart';
 import '../screens/splash/splash_screen.dart';
 
@@ -27,6 +28,7 @@ abstract class AppScreens {
       bindings: [
         NavigationBinding(),
         HomeBinding(),
+        CartBinding(),
       ],
     ),
   ];

@@ -1,11 +1,11 @@
-import 'package:greengrocer/src/constants/endpoints.dart';
-import 'package:greengrocer/src/screens/cart/response/cart_response.dart';
-import 'package:greengrocer/src/services/http_manager.dart';
+import '../../../constants/endpoints.dart';
+import '../../../services/http_manager.dart';
 
 class CartRepository {
   final _httpManager = HttpManager();
 
-  Future<CartResponse<List>> cartItens({
+// <CartResponse<List>>
+  Future getCartItens({
     required String token,
     required String userId,
   }) async {
@@ -21,9 +21,10 @@ class CartRepository {
     );
 
     if (response['result'] != null) {
+      print(response['result']);
       // CartResponse.success(data);
     } else {
-      CartResponse.error('');
+      // CartResponse.error('');
     }
   }
 }
