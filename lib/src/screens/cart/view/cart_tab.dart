@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../config/app_data.dart' as app_data;
-import '../../config/custom_colors.dart';
-import '../../models/cart_item_model.dart';
-import '../../services/utils_service.dart';
-import '../widgets/payment_dialog.dart';
-import 'components/cart_tile.dart';
+import '../../../config/app_data.dart' as app_data;
+import '../../../config/custom_colors.dart';
+import '../../../models/cart_item_model.dart';
+import '../../../services/utils_service.dart';
+import '../../widgets/payment_dialog.dart';
+import '../components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
