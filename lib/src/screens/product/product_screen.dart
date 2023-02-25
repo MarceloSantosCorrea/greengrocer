@@ -5,6 +5,7 @@ import '../../config/custom_colors.dart';
 import '../../models/item_model.dart';
 import '../../services/utils_service.dart';
 import '../base/controller/navigation_controller.dart';
+import '../cart/controller/cart_controller.dart';
 import '../widgets/quantity_widget.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class _ProductScreenState extends State<ProductScreen> {
   final UtilsService utilsService = UtilsService();
 
   int cartItemQuantity = 1;
+  final cartController = Get.find<CartController>();
   final navigationController = Get.find<NavigationController>();
 
   @override
@@ -112,6 +114,10 @@ class _ProductScreenState extends State<ProductScreen> {
                           ),
                           onPressed: () {
                             Get.back();
+                            cartController.addItemToCart(
+                              item: widget.item,
+                              quantity: cartItemQuantity,
+                            );
                             navigationController.navigatePageView(
                               NavigationTabls.cart,
                             );

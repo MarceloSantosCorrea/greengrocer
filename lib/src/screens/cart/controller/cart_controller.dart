@@ -41,8 +41,6 @@ class CartController extends GetxController {
       success: (data) {
         cartItems = data;
         update();
-
-        print(data);
       },
       error: (message) {
         utilsService.showToast(
@@ -66,19 +64,29 @@ class CartController extends GetxController {
     if (itemIndex >= 0) {
       cartItems[itemIndex].quantity += quantity;
     } else {
-      cartRepository.addItemToCart(
-        userId: userId,
-        token: token,
-        productId: productId,
+      final CartResponse<String> response = await cartRepository.addItemToCart(
+        userId: authController.user.id!,
+        token: authController.user.token!,
+        productId: item.id,
         quantity: quantity,
       );
 
-      cartItems.add(
-        CartItemModel(
-          id: '',
-          item: item,
-          quantity: quantity,
-        ),
+      response.when(
+        success: (cartItemId) {
+          cartItems.add(
+            CartItemModel(
+              id: cartItemId,
+              item: item,
+              quantity: quantity,
+            ),
+          );
+        },
+        error: (message) {
+          utilsService.showToast(
+            message: message,
+            isError: true,
+          );
+        },
       );
     }
     update();
