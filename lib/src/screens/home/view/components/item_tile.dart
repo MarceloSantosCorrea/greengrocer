@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../../config/custom_colors.dart';
 import '../../../../models/item_model.dart';
+import '../../../../screens_routes/app_screens.dart';
 import '../../../../services/utils_service.dart';
-import '../../../product/product_screen.dart';
 
 class ItemTile extends StatefulWidget {
   const ItemTile({
@@ -38,10 +39,9 @@ class _ItemTileState extends State<ItemTile> {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (c) => ProductScreen(item: widget.item),
-              ),
+            Get.toNamed(
+              ScreensRoutes.productRoute,
+              arguments: widget.item,
             );
           },
           child: Card(

@@ -9,12 +9,11 @@ import '../cart/controller/cart_controller.dart';
 import '../widgets/quantity_widget.dart';
 
 class ProductScreen extends StatefulWidget {
-  final ItemModel item;
-
-  const ProductScreen({
+  ProductScreen({
     Key? key,
-    required this.item,
   }) : super(key: key);
+
+  final ItemModel item = Get.arguments;
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
