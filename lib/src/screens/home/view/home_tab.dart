@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../config/custom_colors.dart';
+import '../../base/controller/navigation_controller.dart';
+import '../../cart/controller/cart_controller.dart';
 import '../../widgets/app_name_widget.dart';
 import '../../widgets/custom_shimmer.dart';
 import '../controller/home_controller.dart';
@@ -20,6 +22,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   final searchController = TextEditingController();
+  final navigationController = Get.find<NavigationController>();
   GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
   late Function(GlobalKey) runAddToCardAnimation;
 
@@ -47,36 +50,42 @@ class _HomeTabState extends State<HomeTab> {
               top: 18.0,
               right: 25.0,
             ),
-            child: GestureDetector(
-              onTap: () {},
-              child: badges.Badge(
-                showBadge: true,
-                position: badges.BadgePosition.topEnd(top: -12, end: -10),
-                badgeAnimation: const badges.BadgeAnimation.rotation(
-                  animationDuration: Duration(seconds: 1),
-                  colorChangeAnimationDuration: Duration(seconds: 1),
-                  loopAnimation: false,
-                  curve: Curves.fastOutSlowIn,
-                  colorChangeAnimationCurve: Curves.easeInCubic,
-                ),
-                badgeContent: const Text(
-                  '2',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.0,
+            child: GetBuilder<CartController>(
+              builder: (controller) {
+                return GestureDetector(
+                  onTap: () {
+                    navigationController.navigatePageView(NavigationTabls.cart);
+                  },
+                  child: badges.Badge(
+                    showBadge: true,
+                    position: badges.BadgePosition.topEnd(top: -12, end: -10),
+                    badgeAnimation: const badges.BadgeAnimation.rotation(
+                      animationDuration: Duration(seconds: 1),
+                      colorChangeAnimationDuration: Duration(seconds: 1),
+                      loopAnimation: false,
+                      curve: Curves.fastOutSlowIn,
+                      colorChangeAnimationCurve: Curves.easeInCubic,
+                    ),
+                    badgeContent: Text(
+                      controller.getCartTotalItems().toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                    badgeStyle: badges.BadgeStyle(
+                      badgeColor: CustomColors.customContrastColor,
+                    ),
+                    child: AddToCartIcon(
+                      key: globalKeyCartItems,
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        color: CustomColors.customSwatchColor,
+                      ),
+                    ),
                   ),
-                ),
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: CustomColors.customContrastColor,
-                ),
-                child: AddToCartIcon(
-                  key: globalKeyCartItems,
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: CustomColors.customSwatchColor,
-                  ),
-                ),
-              ),
+                );
+              },
             ),
           ),
         ],

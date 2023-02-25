@@ -5,6 +5,7 @@ import '../../../../config/custom_colors.dart';
 import '../../../../models/item_model.dart';
 import '../../../../screens_routes/app_screens.dart';
 import '../../../../services/utils_service.dart';
+import '../../../cart/controller/cart_controller.dart';
 
 class ItemTile extends StatefulWidget {
   const ItemTile({
@@ -21,7 +22,8 @@ class ItemTile extends StatefulWidget {
 }
 
 class _ItemTileState extends State<ItemTile> {
-  final UtilsService utilsService = UtilsService();
+  final utilsService = UtilsService();
+  final cartController = Get.find<CartController>();
 
   final GlobalKey imageGk = GlobalKey();
 
@@ -108,6 +110,7 @@ class _ItemTileState extends State<ItemTile> {
               child: InkWell(
                 onTap: () {
                   switchIcon();
+                  cartController.addItemToCart(item: widget.item);
                   widget.cartAnimationMethod(imageGk);
                 },
                 child: Ink(

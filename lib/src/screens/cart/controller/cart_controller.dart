@@ -83,6 +83,12 @@ class CartController extends GetxController {
     return cartItems.indexWhere((itemInList) => itemInList.item.id == item.id);
   }
 
+  int getCartTotalItems() {
+    return cartItems.isEmpty
+        ? 0
+        : cartItems.map((e) => e.quantity).reduce((a, b) => a + b);
+  }
+
   Future<void> addItemToCart({
     required ItemModel item,
     int quantity = 1,
