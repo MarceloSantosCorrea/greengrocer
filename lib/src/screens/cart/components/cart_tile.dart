@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../config/custom_colors.dart';
 import '../../../models/cart_item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../widgets/quantity_widget.dart';
+import '../controller/cart_controller.dart';
 
 class CartTile extends StatefulWidget {
   final CartItemModel cartItem;
@@ -18,17 +20,13 @@ class CartTile extends StatefulWidget {
 }
 
 class _CartTileState extends State<CartTile> {
-  final UtilsService utilsService = UtilsService();
+  final utilsService = UtilsService();
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.fromLTRB(
-        10,
-        10,
-        10,
-        0,
-      ),
+      margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -54,7 +52,12 @@ class _CartTileState extends State<CartTile> {
         trailing: QuantityWidget(
           value: widget.cartItem.quantity,
           sufixText: widget.cartItem.item.unit,
-          result: (quantity) {},
+          result: (quantity) {
+            cartController.changeItemQuantity(
+              item: widget.cartItem,
+              quantity: quantity,
+            );
+          },
           isRemovable: true,
         ),
       ),
