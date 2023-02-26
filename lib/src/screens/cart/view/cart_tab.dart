@@ -90,30 +90,38 @@ class _CartTabState extends State<CartTab> {
                 ),
                 SizedBox(
                   height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomColors.customSwatchColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      bool? result = await showOrderConfirmation();
+                  child: GetBuilder<CartController>(
+                    builder: (controller) {
+                      return ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: CustomColors.customSwatchColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          ),
+                        ),
+                        onPressed: controller.isCheckoutLoading
+                            ? null
+                            : () async {
+                                bool? result = await showOrderConfirmation();
 
-                      if (result ?? false) {
-                        cartController.checkoutCart();
-                      } else {
-                        utilService.showToast(
-                          message: 'Pedido não confirmado',
-                        );
-                      }
+                                if (result ?? false) {
+                                  cartController.checkoutCart();
+                                } else {
+                                  utilService.showToast(
+                                    message: 'Pedido não confirmado',
+                                  );
+                                }
+                              },
+                        child: controller.isCheckoutLoading
+                            ? const CircularProgressIndicator()
+                            : const Text(
+                                'Concluir pedido',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                      );
                     },
-                    child: const Text(
-                      'Concluir pedido',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
                   ),
                 ),
               ],
