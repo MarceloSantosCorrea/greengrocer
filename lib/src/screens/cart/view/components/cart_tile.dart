@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../config/custom_colors.dart';
-import '../../../models/cart_item_model.dart';
-import '../../../services/utils_service.dart';
-import '../../widgets/quantity_widget.dart';
-import '../controller/cart_controller.dart';
+import '../../../../config/custom_colors.dart';
+import '../../../../models/cart_item_model.dart';
+import '../../../../services/utils_service.dart';
+import '../../../widgets/quantity_widget.dart';
+import '../../controller/cart_controller.dart';
 
 class CartTile extends StatefulWidget {
   final CartItemModel cartItem;

@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../models/cart_item_model.dart';
 import '../../../models/item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../auth/controller/auth.controller.dart';
+import '../../widgets/payment_dialog.dart';
 import '../repository/cart_repository.dart';
 import '../response/cart_response.dart';
 
@@ -28,6 +30,32 @@ class CartController extends GetxController {
     }
 
     return total;
+  }
+
+  Future checkoutCart() async {
+    final response = await cartRepository.checkoutCart(
+      token: authController.user.token!,
+      total: cartTotalPrice(),
+    );
+
+    response.when(
+      success: (order) {
+        showDialog(
+          context: Get.context!,
+          builder: (_) => PaymentDialog(
+            order: order,
+          ),
+        );
+
+        update();
+      },
+      error: (message) {
+        utilsService.showToast(
+          message: message,
+          isError: true,
+        );
+      },
+    );
   }
 
   Future<bool> changeItemQuantity({

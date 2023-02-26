@@ -1,5 +1,6 @@
 import '../../../constants/endpoints.dart';
 import '../../../models/cart_item_model.dart';
+import '../../../models/order_model.dart';
 import '../../../services/http_manager.dart';
 import '../response/cart_response.dart';
 
@@ -31,6 +32,31 @@ class CartRepository {
     } else {
       return CartResponse.error(
         'Ocorreu um erro ao recuperar os dados do carrinho',
+      );
+    }
+  }
+
+  Future<CartResponse<OrderModel>> checkoutCart({
+    required String token,
+    required double total,
+  }) async {
+    final response = await _httpManager.restRequest(
+      url: Endpoints.checkout,
+      method: HttpMethods.post,
+      body: {
+        'total': total,
+      },
+      headers: {
+        'X-Parse-Session-Token': token,
+      },
+    );
+
+    if (response['result'] != null) {
+      final order = OrderModel.fromJson(response['result']);
+      return CartResponse.success(order);
+    } else {
+      return CartResponse.error(
+        'Ocorreu um erro ao realizar o pedido',
       );
     }
   }

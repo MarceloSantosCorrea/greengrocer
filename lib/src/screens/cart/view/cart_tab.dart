@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../config/app_data.dart' as app_data;
 import '../../../config/custom_colors.dart';
 import '../../../services/utils_service.dart';
-import '../../widgets/payment_dialog.dart';
-import '../components/cart_tile.dart';
 import '../controller/cart_controller.dart';
+import 'components/cart_tile.dart';
 
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
@@ -16,7 +14,8 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
-  final UtilsService utilService = UtilsService();
+  final utilService = UtilsService();
+  final cartController = Get.find<CartController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,17 +101,10 @@ class _CartTabState extends State<CartTab> {
                       bool? result = await showOrderConfirmation();
 
                       if (result ?? false) {
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          builder: (_) => PaymentDialog(
-                            order: app_data.orders.first,
-                          ),
-                        );
+                        cartController.checkoutCart();
                       } else {
                         utilService.showToast(
                           message: 'Pedido não confirmado',
-                          isError: true,
                         );
                       }
                     },
