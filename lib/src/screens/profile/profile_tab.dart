@@ -81,6 +81,7 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   Future<bool?> updatePassword() {
+    final currentPasswordController = TextEditingController();
     final newPasswordController = TextEditingController();
     final formKey = GlobalKey<FormState>();
 
@@ -113,11 +114,12 @@ class _ProfileTabState extends State<ProfileTab> {
                           ),
                         ),
                       ),
-                      const CustomTextField(
+                      CustomTextField(
                         icon: Icons.lock,
                         label: 'Senha atual',
                         isSecret: true,
                         validator: passwordValidator,
+                        controller: currentPasswordController,
                       ),
                       CustomTextField(
                         icon: Icons.lock_outline,
@@ -144,15 +146,27 @@ class _ProfileTabState extends State<ProfileTab> {
                       ),
                       SizedBox(
                         height: 45,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          )),
-                          onPressed: () {
-                            formKey.currentState!.validate();
-                          },
-                          child: const Text('Atualizar'),
+                        child: Obx(
+                          () => ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            )),
+                            onPressed: authController.isLoading.value
+                                ? null
+                                : () {
+                                    if (formKey.currentState!.validate()) {
+                                      authController.changePassword(
+                                        currentPassword:
+                                            currentPasswordController.text,
+                                        newPassword: newPasswordController.text,
+                                      );
+                                    }
+                                  },
+                            child: authController.isLoading.value
+                                ? const CircularProgressIndicator()
+                                : const Text('Atualizar'),
+                          ),
                         ),
                       ),
                     ],
