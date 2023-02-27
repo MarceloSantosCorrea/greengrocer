@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/cart_item_model.dart';
-import '../../../models/order_model.dart';
-import '../../../services/utils_service.dart';
-import '../../widgets/payment_dialog.dart';
+import '../../../../models/cart_item_model.dart';
+import '../../../../models/order_model.dart';
+import '../../../../services/utils_service.dart';
+import '../../../widgets/payment_dialog.dart';
 import 'order_status_widget.dart';
 
 class OrderTile extends StatelessWidget {
@@ -14,7 +14,7 @@ class OrderTile extends StatelessWidget {
     required this.order,
   }) : super(key: key);
 
-  final UtilsService utilsService = UtilsService();
+  final utilsService = UtilsService();
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/app_data.dart' as app_data;
+import '../../../config/app_data.dart' as app_data;
 import 'components/order_tile.dart';
 
 class OrdersTab extends StatelessWidget {
