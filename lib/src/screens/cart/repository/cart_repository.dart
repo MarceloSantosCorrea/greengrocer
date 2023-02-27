@@ -28,7 +28,7 @@ class CartRepository {
               .map(CartItemModel.fromJson)
               .toList();
 
-      return CartResponse.success(data);
+      return CartResponse<List<CartItemModel>>.success(data);
     } else {
       return CartResponse.error(
         'Ocorreu um erro ao recuperar os dados do carrinho',
@@ -53,7 +53,7 @@ class CartRepository {
 
     if (response['result'] != null) {
       final order = OrderModel.fromJson(response['result']);
-      return CartResponse.success(order);
+      return CartResponse<OrderModel>.success(order);
     } else {
       return CartResponse.error(
         'Ocorreu um erro ao realizar o pedido',
@@ -101,7 +101,7 @@ class CartRepository {
     );
 
     if (result['result'] != null) {
-      return CartResponse.success(result['result']['id']);
+      return CartResponse<String>.success(result['result']['id']);
     } else {
       return CartResponse.error(
         'Não foi possível adicionar item no carrinho',
