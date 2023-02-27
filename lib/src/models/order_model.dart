@@ -24,6 +24,8 @@ class OrderModel {
 
   double total;
 
+  bool get isOverDue => overdueDateTime.isBefore(DateTime.now());
+
   String qrCodeImage;
 
   OrderModel({

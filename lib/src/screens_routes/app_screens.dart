@@ -34,8 +34,8 @@ abstract class AppScreens {
       bindings: [
         NavigationBinding(),
         HomeBinding(),
-        CartBinding(),
         OrdersBinding(),
+        CartBinding(),
       ],
     ),
   ];

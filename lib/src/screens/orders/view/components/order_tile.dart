@@ -27,10 +27,15 @@ class OrderTile extends StatelessWidget {
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: GetBuilder<OrderController>(
-          init: OrderController(),
+          init: OrderController(order),
           global: false,
           builder: (controller) {
             return ExpansionTile(
+              onExpansionChanged: (value) {
+                if (value && order.items.isEmpty) {
+                  controller.getOrderItems();
+                }
+              },
               // initiallyExpanded: order.status == 'pending_payment',
               title: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -48,79 +53,88 @@ class OrderTile extends StatelessWidget {
               ),
               childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: SizedBox(
-                          height: 150,
-                          child: ListView(
-                            children: order.items.map((orderItem) {
-                              return _OrderItemWidget(
-                                utilsService: utilsService,
-                                orderItem: orderItem,
-                              );
-                            }).toList(),
+              children: controller.isLoading
+                  ? [
+                      Container(
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(),
+                      )
+                    ]
+                  : [
+                      IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 3,
+                              child: SizedBox(
+                                height: 150,
+                                child: ListView(
+                                  children: order.items.map((orderItem) {
+                                    return _OrderItemWidget(
+                                      utilsService: utilsService,
+                                      orderItem: orderItem,
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            VerticalDivider(
+                              thickness: 2,
+                              color: Colors.grey.shade300,
+                              width: 8,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: OrderStatusWidget(
+                                status: order.status,
+                                isOverdue: order.overdueDateTime
+                                    .isBefore(DateTime.now()),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text.rich(
+                        TextSpan(
+                          style: const TextStyle(fontSize: 20),
+                          children: [
+                            const TextSpan(
+                              text: 'Total ',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: utilsService.priceToCurrency(order.total),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Visibility(
+                        visible: order.status == 'pending_payment' &&
+                            !order.isOverDue,
+                        child: ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          )),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => PaymentDialog(
+                                order: order,
+                              ),
+                            );
+                          },
+                          icon: Image.asset(
+                            'assets/app_images/pix.png',
+                            height: 18,
                           ),
-                        ),
-                      ),
-                      VerticalDivider(
-                        thickness: 2,
-                        color: Colors.grey.shade300,
-                        width: 8,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: OrderStatusWidget(
-                          status: order.status,
-                          isOverdue:
-                              order.overdueDateTime.isBefore(DateTime.now()),
+                          label: const Text('Ver QR Code Pix'),
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Text.rich(
-                  TextSpan(
-                    style: const TextStyle(fontSize: 20),
-                    children: [
-                      const TextSpan(
-                        text: 'Total ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: utilsService.priceToCurrency(order.total),
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: order.status == 'pending_payment',
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    )),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (_) => PaymentDialog(
-                          order: order,
-                        ),
-                      );
-                    },
-                    icon: Image.asset(
-                      'assets/app_images/pix.png',
-                      height: 18,
-                    ),
-                    label: const Text('Ver QR Code Pix'),
-                  ),
-                ),
-              ],
             );
           },
         ),
