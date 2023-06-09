@@ -5,6 +5,7 @@ import '../../../models/cart_item_model.dart';
 import '../../../models/item_model.dart';
 import '../../../services/utils_service.dart';
 import '../../auth/controller/auth.controller.dart';
+import '../../orders/controller/all_orders_controller.dart';
 import '../../widgets/payment_dialog.dart';
 import '../repository/cart_repository.dart';
 import '../response/cart_response.dart';
@@ -13,6 +14,7 @@ class CartController extends GetxController {
   final cartRepository = CartRepository();
   final authController = Get.find<AuthController>();
   final utilsService = UtilsService();
+  final allOrdersController = Get.find<AllOrdersController>();
 
   List<CartItemModel> cartItems = [];
 
@@ -59,6 +61,7 @@ class CartController extends GetxController {
           ),
         );
 
+        allOrdersController.getAllOrders();
         update();
       },
       error: (message) {
