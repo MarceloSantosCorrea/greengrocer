@@ -1,4 +1,4 @@
-package br.com.maimweb.greengrocer.greengrocer
+package br.com.maximweb.greengrocer
 
 import io.flutter.embedding.android.FlutterActivity
 
