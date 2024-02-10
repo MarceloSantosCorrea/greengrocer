@@ -37,9 +37,9 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ),
-        child: Column(
+        child: const Column(
           mainAxisSize: MainAxisSize.min,
-          children: const [
+          children: [
             AppNameWidget(
               greenTileColor: Colors.white,
               textSize: 40.0,
